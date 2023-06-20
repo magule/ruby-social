@@ -1,0 +1,46 @@
+<div class="container">
+  <h1><%= @user.username %>'s Profile</h1>
+
+  <div class="mt-4">
+    <% if current_user.following?(@user) %>
+      <%= button_to "Unfollow", unfollow_path(@user), method: :delete, class: "btn btn-danger" %>
+    <% elsif current_user.sent_follow_request_to?(@user) %>
+      <%= button_to "Cancel Follow Request", cancel_path(@user), method: :delete, class: "btn btn-secondary" %>
+    <% else %>
+      <%= button_to "Follow", follow_path(@user), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <hr class="my-4">
+
+  <% if current_user.following?(@user) %>
+    <h2>Notes:</h2>
+    <ul>
+      <% (@user.notes + current_user.notes).uniq.each do |note| %>
+        <li>
+          <%= link_to note.title, note_path(note) %>
+        </li>
+      <% end %>
+    </ul>
+
+    <hr class="my-4">
+
+    <h2>User's Collections and Notes in Them</h2>
+    <ul>
+      <% @user.collections.each do |collection| %>
+        <li>
+          <%= collection.name %>
+          <ul>
+            <% collection.notes.each do |note| %>
+              <li>
+                <%= link_to note.title, note_path(note) %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <hr class="my-4">
+</div>

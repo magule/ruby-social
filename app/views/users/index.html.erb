@@ -1,0 +1,28 @@
+<hr />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>All Users</h1>
+      <ul class="list-group">
+        <% @users.each do |user| %>
+          <li class="list-group-item">
+            <%= link_to user.username, profile_path(user) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h1>My Friends</h1>
+      <ul class="list-group">
+        <% @users.each do |user| %>
+          <% if current_user.following?(user) %>
+            <li class="list-group-item">
+              <%= link_to user.username, profile_path(user) %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

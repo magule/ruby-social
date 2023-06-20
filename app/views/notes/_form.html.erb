@@ -1,0 +1,44 @@
+<%= form_with(model: note) do |form| %>
+  <% if note.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(note.errors.count, "error") %> prohibited this note from being saved:</h2>
+
+      <ul>
+        <% note.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :content, class: "form-label" %>
+    <%= form.text_area :content, class: "form-control", rows: 6 %>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="form-group">
+    <%= form.label :user, class: "form-label" %>
+    <%= form.text_field :username, class: "form-control", value: current_user.username, readonly: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :picture, class: "form-label" %>
+    <%= form.file_field :picture, class: "form-control-file" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :collection_id, class: "form-label" %>
+    <%= form.collection_select :collection_id, current_user.collections, :id, :name, { include_blank: true }, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Save", class: "btn btn-success" %>
+  </div>
+<% end %>

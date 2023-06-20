@@ -1,0 +1,16 @@
+<br />
+
+<% @collections.each do |collection| %>
+  <% if collection.user == current_user %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= link_to collection.name, collection_path(collection) %>
+          <br>
+          <br>
+          <span class="badge badge-primary"><%= collection.notes.count %> Notes</span>
+        </h5>
+      </div>
+    </div>
+  <% end %>
+<% end %>

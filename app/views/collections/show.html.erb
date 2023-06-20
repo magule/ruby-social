@@ -1,0 +1,23 @@
+
+<h1><%= @collection.name %></h1>
+
+<% if @collection.user == current_user %>
+  <%= button_to "Delete this collection.", @collection, method: :delete, class: "btn btn-danger"%>
+  <br>
+  <p class="text-danger">Warning! This will delete all the notes belonging to this collection.</p>
+
+  <% if @notes.any? %>
+    <h2>Notes:</h2>
+    <ul class="list-group">
+      <% @notes.each do |note| %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <%= link_to note.title, collection_note_path(@collection, note) %>
+          <small class="text-muted">user: <%= note.username %></small>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <br>
+    <p>No notes found for this collection.</p>
+  <% end %>
+<% end %>

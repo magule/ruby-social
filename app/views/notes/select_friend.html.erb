@@ -1,0 +1,7 @@
+<ul>
+  <% @users.each do |user| %>
+    <% if current_user.followers.include?(user) %>
+      <li><%= link_to user.username, share_note_with_friend_path(note_id: @note.id, friend_id: user.id) %></li>
+    <% end %>
+  <% end %>
+</ul>

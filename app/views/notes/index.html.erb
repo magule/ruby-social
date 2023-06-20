@@ -1,0 +1,54 @@
+<style>
+  :root {
+    --green: white;
+  }
+
+  .card-text,
+  .card-title {
+    color: black;
+  }
+
+  .card {
+    border-width: 3px;
+  }
+</style>
+<hr />
+
+<div class="container">
+  <p class="text-success"><%= notice %></p>
+
+  <h1>Posts</h1>
+  <br />
+
+  <div class="row">
+    <% collection_colors = {} %> <!-- Store collection colors -->
+    <% @notes.reverse.each do |note| %> <!-- Reverse the order of notes -->
+      <% if note.user == current_user %>
+        <% collection_color = collection_colors[note.collection_id] || "var(--green)" %> <!-- Get collection color or use the specified green -->
+        <% collection_colors[note.collection_id] = collection_color %> <!-- Store collection color -->
+        <div class="col-md-4">
+          <div class="card mb-4" style="border-radius: 10px; background-color: <%= collection_color %>; opacity: 0.8;"> <!-- Added border-radius, background-color, and opacity -->
+            <div class="card-body">
+              <h5 class="card-title"><%= note.title %></h5>
+              <% if note.content.length > 180 %>
+                <p class="card-text"><%= truncate(note.content, length: 180) %></p>
+                <%= link_to "Read rest...", note, class: "btn btn-link" %>
+              <% else %>
+                <p class="card-text"><%= note.content %></p>
+              <% end %>
+              <hr />
+              <small class="text-muted">user: <%= note.username %></small>
+              <br />
+              <small class="text-muted">
+                Collection: <%= link_to note.collection.name, collection_path(note.collection) %>
+              </small>
+            </div>
+            <div class="card-footer">
+              <%= link_to "Show this note", note, class: "btn btn-outline-info btn-sm" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

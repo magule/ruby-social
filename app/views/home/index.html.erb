@@ -1,0 +1,52 @@
+<style>
+
+.button-group {
+  display: flex;
+  gap: 10px; /* Adjust the spacing between buttons */
+}
+
+</style>
+
+<br />
+<div class="text-center">
+  <h1>Hi there!</h1>
+</div>
+
+<br />
+
+<div class="text-center">
+
+<% if current_user %>
+<p>Welcome <strong><%= current_user.username %></strong> to Kuara, a notes app where you can create notes, note collections and see your friend's creations.</p>
+
+<br>
+
+  <hr />
+</div>
+
+
+  <br />
+  <h6>You can see your follow requests below.</h6>
+  <br>
+  <% current_user.follow_requests.each do |request| %>
+    <div class="follow-request">
+      User <%= request.followerable.username %> wants to follow you!
+      <br />
+      <br />
+
+      <div class="button-group">
+        <%= button_to "accept", accept_path(request.followerable), class: "btn btn-success" %>
+        <%= button_to "decline", decline_path(request.followerable), class: "btn btn-danger" %>
+      </div>
+    </div>
+  <% end %>
+
+
+<% else %>
+  <div class="text-center">
+    <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary btn-lg mb-2" %>
+    <br>
+    <%= link_to "Login", new_user_session_path, class: "btn btn-secondary btn-lg" %>
+  </div>
+<% end %>
+

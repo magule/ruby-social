@@ -1,0 +1,14 @@
+<%= form_with(model: @collection, url: collections_path) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <br />
+    <%= form.text_field :name %>
+  </div>
+
+<div class="field form-group">
+  <%= form.number_field :user_id, id: :collection_user_id, class:"form-control", value: current_user.id, type: :hidden%>
+
+</div>
+
+  <%= form.submit "Create Collection", class:"btn btn-primary" %>
+<% end %>

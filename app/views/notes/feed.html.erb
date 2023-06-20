@@ -1,0 +1,24 @@
+<div class="container">
+  <h1>Feed</h1>
+
+  <hr class="my-4">
+
+  <% if @notes.any? %>
+    <ul>
+      <% @notes.each do |note| %>
+        <li>
+          <%= link_to note.title, note_path(note) %>
+          <span class="note-username"><br /> by
+            <%= link_to note.user.username, profile_path(note.user) %>
+          </span>
+          <br>
+          <span class="note-created-at">created on <%= note.created_at.strftime("%B %d, %Y - %H:%M") %></span>
+          <hr>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No notes to display.</p>
+  <% end %>
+
+</div>
